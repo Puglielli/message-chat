@@ -161,8 +161,6 @@ def verify_fb_token(token_sent):
     return 'Invalid verification token'
 
 
-connec = conn(DATABASE)
-
 
 # def checkRegister(step):
 #     begin = step.__eq__(step1)
@@ -179,6 +177,7 @@ def checkBase(id):
 
 
 def checkQuestion(step, id, text):
+    connec = conn(DATABASE)
     if check('').getStep(id).__eq__('1.1'):
         quest = "'" + text + "'"
         connec.updateQuestions(TABLE, id, quest)
@@ -231,6 +230,7 @@ def getQuest(id, text):
 
 
 def startStep(step, id, text):
+    connec = conn(DATABASE)
     begin = step.__eq__(step1)
     beginName = step.__eq__(step1_2)
     pre_registration = step.__eq__(step2)
