@@ -1,3 +1,2 @@
 Flask==1.1.1
-click==6.7
 pymessenger==0.0.7.0
