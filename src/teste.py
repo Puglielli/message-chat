@@ -118,7 +118,7 @@ step6 = '3.0'
 
 
 ## Lista de perguntas
-list_questions  = {
+list_questions = {
 '1': 'Qual sua idade?',
 '2': 'Como você se sente atualmente?',
 '3': 'Sente-se agitado ultimamente?',
@@ -261,47 +261,47 @@ def getQuest(id, text):
     return "'" + check('').getQuestions(id) + ';' + text + "'"
 
 
-id = '2243977022367260'
+# id = '2243977022367260'
 
-if checkBase(id):
-    if check('').getStep(id).__eq__(step2):
-        print('Fazer Cadastro')
-        name = input()
-        startStep(step2, id, name)
-
-    elif check('').getStep(id).__eq__(step3):
-        print('Valida Nome')
-        choice = input()
-        startStep(step3, id, choice)
-
-    elif check('').getStep(id).__contains__('1.'):
-        if not check('').getStep(id).__eq__('1.29'):
-            print('perguntas')
-            choice = input()
-            startStep(step4, id, choice)
-        else:
-            print('challenges p')
-
-    elif check('').getStep(id).__eq__(step5):
-        print('Seq Pergunta')
-        choice = input()
-        startStep(step5, id, choice)
-    else:
-        # connec.updateStep(TABLE, id, 2.0)
-        if check('').getQuestions(id).__eq__(''):
-            choice = ''
-            if choice.upper().__eq__('S'):
-                connec.updateStep(TABLE, id, 2.0)
-                print('quer fazer o questionario')
-            elif choice.upper().__eq__('N'):
-                print('quer fazer o questionario')
-            else:
-                print('Opcao invalida, tente novamente!')
-                print('\'S\' Sim ou \'N\' Não')
-            choice = input()
-
-
-else:
-    print('Primeira vez')
-    startStep(step1, id, '')
+# if checkBase(id):
+#     if check('').getStep(id).__eq__(step2):
+#         print('Fazer Cadastro')
+#         name = input()
+#         startStep(step2, id, name)
+#
+#     elif check('').getStep(id).__eq__(step3):
+#         print('Valida Nome')
+#         choice = input()
+#         startStep(step3, id, choice)
+#
+#     elif check('').getStep(id).__contains__('1.'):
+#         if not check('').getStep(id).__eq__('1.29'):
+#             print('perguntas')
+#             choice = input()
+#             startStep(step4, id, choice)
+#         else:
+#             print('challenges p')
+#
+#     elif check('').getStep(id).__eq__(step5):
+#         print('Seq Pergunta')
+#         choice = input()
+#         startStep(step5, id, choice)
+#     else:
+#         # connec.updateStep(TABLE, id, 2.0)
+#         if check('').getQuestions(id).__eq__(''):
+#             choice = ''
+#             if choice.upper().__eq__('S'):
+#                 connec.updateStep(TABLE, id, 2.0)
+#                 print('quer fazer o questionario')
+#             elif choice.upper().__eq__('N'):
+#                 print('quer fazer o questionario')
+#             else:
+#                 print('Opcao invalida, tente novamente!')
+#                 print('\'S\' Sim ou \'N\' Não')
+#             choice = input()
+#
+#
+# else:
+#     print('Primeira vez')
+#     startStep(step1, id, '')
 

@@ -8,6 +8,13 @@ verify_ssl = true
 [packages]
 flask = "*"
 pymessenger = "*"
+gunicorn = "*"
+flask-sqlalchemy = "*"
+flask-script = "*"
+flask-migrate = "*"
+psycopg2-binary = "*"
+myapplication = "*"
+app = "*"
 
 [requires]
 python_version = "3.7"

@@ -1,13 +1,17 @@
+# -*- coding: utf-8 -*-
 # Python libraries that we need to import for our bot
 import os
 import random
+
 from flask import Flask, request
 from pymessenger.bot import Bot
 
 from src.services.ConnectionDatabase import ConnectionDatabase as conn
 from src.services.UsersServices import UsersServices as check
 
+
 app = Flask(__name__)
+
 ACCESS_TOKEN = 'EAAFUPy2BT5cBAGt8EoEdgQH2TjaDVdi2v7SUAivZCOA78Lo4PCImN2oXComjzAkxUgtU8V7p29TWkcu4mJ9ntrB4YplZCszo2T4CLNH322QAvSM1Vi4zerk4D7UfrZBaJRzpV7Vnd7BZC6hmY3bwgGd7GbqJ3STIcUSW4uGtFgZDZD'
 VERIFY_TOKEN = 'PYFYTOKENAPI'
 ID_BOT = 112495156767265
@@ -109,27 +113,6 @@ def receive_message():
             else:
                 print("Sem Message")
 
-        # if event.get('message').get('text'):
-        #     print("Messenge: " + str(event.get('message').get('text')))
-
-        # for event in output['entry']:
-        #     messaging = event['messaging']
-        #
-        #     for message in messaging:
-        #         if message.get('message'):
-        #             print("ID: " + str(message['sender']['id']) + ", Messagem: " + str(message['sender']))
-        #             # Facebook Messenger ID for user so we know where to send response back to
-        #             recipient_id = message['sender']['id']
-        #             #print("Data User" + str(message['sender']))
-        #             if message['message'].get('text'):
-        #                 #print(message['message'].get('text'))
-        #                 response_sent_text = get_message()
-        #                 if (recipient_id == "2239164186181399"):
-        #                     send_message(recipient_id, "Olá Samuel Seu GostoSÃO")
-        #                 elif (recipient_id == "2345448712228712"):
-        #                     send_message(recipient_id, "Seja Bem vindo Samuel!")
-        #                 else:
-        #                     send_message(recipient_id, response_sent_text)
     return "Message Processed"
 
 
@@ -161,22 +144,11 @@ def verify_fb_token(token_sent):
     return 'Invalid verification token'
 
 
-
-# def checkRegister(step):
-#     begin = step.__eq__(step1)
-#     pre_registration = step.__eq__(step2)
-#
-#     if begin or pre_registration:
-#         return True
-#     else:
-#         return False
-
-
 def checkBase(id):
     return check('').checkExist(id)
 
 
-def checkQuestion(step, id, text):
+def checkQuestion(id, text):
     connec = conn(DATABASE)
     if check('').getStep(id).__eq__('1.1'):
         quest = "'" + text + "'"
@@ -187,7 +159,7 @@ def checkQuestion(step, id, text):
     elif check('').getStep(id).__eq__('1.2'):
         connec.updateQuestions(TABLE, id, getQuest(id, text))
         connec.updateStep(TABLE, id, getNextQuestion(id))
-        send_message(id, '\'S\' Sim, \'N\' Não ou \'T\' Talvez')
+        send_message(id, '\'S\' para Sim, \'N\' para Não ou \'A\' para As vezes')
         send_message(id, list_questions.get(str(int(check('').getStep(id)[2:]))))
 
     elif check('').getStep(id).__eq__('1.18'):
@@ -198,7 +170,9 @@ def checkQuestion(step, id, text):
     elif check('').getStep(id).__eq__('1.28'):
         connec.updateQuestions(TABLE, id, getQuest(id, text))
         connec.updateStep(TABLE, id, getNextQuestion(id))
-        send_message(id, 'Obrigado Por responder o questionario')
+        send_message(id, 'Obrigado Por responder o questionario!')
+        send_message(id, 'Caso tenha alguma dúvida deseja indicar alguma melhoria, ou queira fazer alguma alteração dos seus dados, por favor entre em contato no e-mail: pyfy@gmail.com')
+        send_message(id, 'Iremos analisar as respostas enviadas e entraremos em contato em breve!')
 
     else:
         if text.upper().__eq__('S'):
@@ -209,13 +183,13 @@ def checkQuestion(step, id, text):
             connec.updateQuestions(TABLE, id, getQuest(id, text))
             connec.updateStep(TABLE, id, getNextQuestion(id))
             send_message(id, list_questions.get(str(int(check('').getStep(id)[2:]))))
-        elif text.upper().__eq__('T'):
+        elif text.upper().__eq__('A'):
             connec.updateQuestions(TABLE, id, getQuest(id, text))
             connec.updateStep(TABLE, id, getNextQuestion(id))
             send_message(id, list_questions.get(str(int(check('').getStep(id)[2:]))))
         else:
             send_message(id, 'Opcao invalida, tente novamente!')
-            send_message(id, '\'S\' Sim, \'N\' Não ou \'T\' Talvez')
+            send_message(id, '\'S\' para Sim, \'N\' para Não ou \'A\' para As vezes')
             send_message(id, list_questions.get(str(int(check('').getStep(id)[2:]))))
 
 
@@ -228,9 +202,9 @@ def getQuest(id, text):
     return "'" + check('').getQuestions(id) + ';' + text + "'"
 
 
-
 def startStep(step, id, text):
     connec = conn(DATABASE)
+
     begin = step.__eq__(step1)
     beginName = step.__eq__(step1_2)
     pre_registration = step.__eq__(step2)
@@ -241,10 +215,10 @@ def startStep(step, id, text):
 
     if begin:
         connec.insert(TABLE, id, '', 0.2, '')
-        send_message(id, 'Bem vindo ao PYFY - Nos temos o objetivo de...')
-        send_message(id, 'Informe Seu Primeiro Nome?')
+        send_message(id, 'Bem vindo ao PYFY!\nO nosso objetivo é ajudar pessoas através de uma metodologia desenvolvida para identificar sintomas de depressao, para que possamos auxiliar a buscar pelo tratamento')
+        send_message(id, 'Por gentileza informe o seu nome')
     elif beginName:
-        send_message(id, 'Informe Seu Primeiro Nome?')
+        send_message(id, 'Por gentileza informe o seu nome')
     elif pre_registration:
         connec.updateName(TABLE, id, "'"+text+"'")
         send_message(id, f'{text}, Seu Nome esta correto? - \'S\' Sim e \'N\' Não')
@@ -253,16 +227,16 @@ def startStep(step, id, text):
         if text.upper().__eq__('S'):
             send_message(id, 'Correto!')
             send_message(id, f'Bem vindo {connec.formatter(check.getName(id))}')
-            send_message(id, 'Você gostaria de responder um questionario? - \'S\' Sim e \'N\' Não')
+            send_message(id, 'A nossa metodologia foi desenvolvida através de serie de perguntas, poderiamos começar? - \'S\' Sim e \'N\' Não')
             connec.updateStep(TABLE, id, 2.0)
         elif text.upper().__eq__('N'):
-            send_message(id, 'Informe Seu Primeiro Nome?')
+            send_message(id, 'Por gentileza informe o seu nome')
             connec.updateStep(TABLE, id, 0.2)
         else:
             send_message(id, 'Opcao invalida, tente novamente!')
             send_message(id, f'{connec.formatter(check.getName(id))}, Seu Nome esta correto? - \'S\' Sim e \'N\' Não')
     elif questions:
-        checkQuestion(step, id, text)
+        checkQuestion(id, text)
 
     elif validate_questions:
         if text.upper().__eq__('S'):
@@ -280,72 +254,6 @@ def startStep(step, id, text):
         send_message(id, 'Diga que voce é lindo!')
     else:
         send_message(id, 'NOT FOUND')
-
-
-# def insert(id_sender, name, date):
-#     conn = ConnectionDatabase(DATABASE)
-#     conn.insert(id_sender, name, date)
-#
-#
-# def isExist(id_user):
-#     conn = ConnectionDatabase(DATABASE)
-#     if conn.getName(id_user).__contains__("[]"):
-#         return False
-#     else:
-#         return True
-#
-#
-# def getName(id_user):
-#     conn = ConnectionDatabase(DATABASE)
-#     return conn.formatter(conn.getName(id_user))
-#
-#
-# def insertUser(id, name, choice):
-#     global list_user
-#     data = {}
-#     data['id'] = id
-#     data['name'] = name
-#     data['choice'] = choice
-#     size = len(list_user)
-#     list_user.insert(size, data)
-#
-#
-# def getUser(id):
-#     global list_user
-#     size = len(list_user)
-#     data = {}
-#     data['id'] = 0
-#     data['name'] = 'default'
-#     data['choice'] = 'Z'
-#     lista = data
-#     for i in range(size):
-#         idTemp = list_user[i].get('id')
-#         if id == idTemp:
-#             lista = list_user[i]
-#         else:
-#             continue
-#     return lista
-#
-#
-#
-# def updateUser(id, name):
-#     global list_user
-#     size = len(list_user)
-#     for i in range(size):
-#         idTemp = list_user[i].get('id')
-#         if id == idTemp:
-#             list_user[i]['name'] = name
-#
-#
-# def deleteUser(id):
-#     global list_user
-#     data = getUser(id)
-#     if data.get('id') != 0:
-#         list_user.remove(data)
-#
-#
-# def getDate():
-#     return datetime.now().strftime("%d/%m/%Y %H:%M:%S")
 
 
 if __name__ == "__main__":
