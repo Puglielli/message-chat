@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from datetime import datetime
 from src.services.ConnectionDatabase import ConnectionDatabase as conn
 from src.services.UsersServices import UsersServices as check
