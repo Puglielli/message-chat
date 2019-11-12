@@ -1,6 +1,6 @@
-from src.services.ConnectionDatabase import ConnectionDatabase
+from ConnectionDatabase import ConnectionDatabase
 
-DATABASE = 'db_files/PYFY.db'
+DATABASE = 'PYFY.db'
 conn = ''
 BASEDEF = 'users'
 FORMAT = ConnectionDatabase.formatter

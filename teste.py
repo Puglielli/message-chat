@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
-from src.services.ConnectionDatabase import ConnectionDatabase as conn
-from src.services.UsersServices import UsersServices as check
+from ConnectionDatabase import ConnectionDatabase as conn
+from UsersServices import UsersServices as check
 
-DATABASE = 'db_files/PYFY.db'
+DATABASE = 'PYFY.db'
 TABLE = 'users'
 list_user = []
 

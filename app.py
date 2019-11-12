@@ -6,8 +6,8 @@ import random
 from flask import Flask, request
 from pymessenger.bot import Bot
 
-from src.services.ConnectionDatabase import ConnectionDatabase as conn
-from src.services.UsersServices import UsersServices as check
+from ConnectionDatabase import ConnectionDatabase as conn
+from UsersServices import UsersServices as check
 
 
 app = Flask(__name__)
@@ -15,7 +15,7 @@ app = Flask(__name__)
 ACCESS_TOKEN = 'EAAFUPy2BT5cBAGt8EoEdgQH2TjaDVdi2v7SUAivZCOA78Lo4PCImN2oXComjzAkxUgtU8V7p29TWkcu4mJ9ntrB4YplZCszo2T4CLNH322QAvSM1Vi4zerk4D7UfrZBaJRzpV7Vnd7BZC6hmY3bwgGd7GbqJ3STIcUSW4uGtFgZDZD'
 VERIFY_TOKEN = 'PYFYTOKENAPI'
 ID_BOT = 112495156767265
-DATABASE = 'db_files/PYFY.db'
+DATABASE = 'PYFY.db'
 TABLE = 'users'
 bot = Bot(ACCESS_TOKEN)
 
